@@ -1,12 +1,100 @@
-openapi: 3.0.0
+openapi: 3.1.0
 info:
-  title: v1
+  title: Cloudyy API Reference
   version: 1.0.0
-  description: ""
 servers:
-  - url: "{{address}}"
-  - url: ""
-  - url: i
+  - url: https://local.cloudyy.ru/api/v1
+    description: Local API development environment
+  - url: https://dev.cloudyy.ru/api/v1
+    description: Remote API environment that contains mocks
+  - url: https://api.cloudyy.ru/api/v1
+    description: Remote API environment that contains live service
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+          description: Indicates whether the request was successful or not.
+        track_data:
+          type: object
+          properties:
+            request_id:
+              type: string   Not Committed Yet
+              example: "a6504b6a-ab90-4be5-a434-1b8e6aff3af6"
+              description: Unique identifier for the request.
+            issuer_id:
+              type: string
+              example: "391b1dcc-6b88-425f-9398-d898c76b5450"
+              description: Unique identifier for the issuer of the request.
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "XXX"
+              description: |
+                "ERR-BEARER-UNAUTH - JWT is unauthorized"
+                "ERR-BEARER-EXPIRED - JWT is expired"
+                "ERR-BEARER-NOTFOUND - JWT IAT validation failed"
+                "ERR-BEARER-NBF - JWT NBF validation failed"
+                "ERR-BEARER-IAT - JWT IAT validation failed"
+                "ERR-BEARER-ALG - JWT algorithm mismatch"
+                "ERR-CSRF-INV-REF - URL did not match Referer header"
+                "ERR-CSRF-INV-ORI - Not a trusted origin"
+                "ERR-CSRF-INV-TOK - CSRF token not found or malformed"
+                "ERR-CSRF-EMP-TOK - CSRF token is not provided"
+                "ERR-CSRF-EMP-REF - Request provided empty Referer"
+                "ERR-2FA-REQUIRED - Action requires 2FA"
+                "ERR-2FA-INV-TYPE - Invalid type of 2FA"
+                "ERR-2FA-INV-ACTION - Invalid 2FA request action"
+                "ERR-2FA-INV-ID - Invalid 2FA ID"
+                "ERR-2FA-INV-CODE - Invalid 2FA code"
+                "ERR-2FA-UNK-TYPE - 2FA type is not enabled for user"
+                "ERR-2FA-CON-TYPE - 2FA already present (conflict)"
+                "ERR-SECURITY-INV-EMAIL - Invalid email format"
+                "ERR-SECURITY-INV-PASSWORD - Invalid password format"
+                "ERR-SECURITY-INV-USERDATA - Invalid user data format"
+                "ERR-SECURITY-INV-PASSLENGTH - Invalid password length"
+                "ERR-SECURITY-INV-NOTIF-LIMIT - Invalid notification limit"
+                "ERR-SECURITY-INV-DIR-PAGE - Invalid page value"
+                "ERR-SECURITY-INV-DIR-SIZE - Invalid size value"
+                "ERR-SECURITY-INV-DIR-SORT - Invalid sort value"
+                "ERR-SECURITY-INV-DIR-TYPE - Invalid type value"
+                "ERR-SECURITY-INV-DATE - Invalid date format"
+                "ERR-SECURITY-INV-DEST - Invalid destination or not provided"
+                "ERR-AUTH-SESSION-INVALID - Invalid refresh token"
+                "ERR-AUTH-INVITE-INVALID - Invalid invite code"
+                "ERR-AUTH-INVITE-EXPIRED - Invite code expired"
+                "ERR-AUTH-INVITE-CONFLICT - Invite code redeemed"
+                "ERR-AUTH-CODE-INVALID - Invalid confirmation code"
+                "ERR-AUTH-CODE-EXPIRED - Confirmation code expired"
+                "ERR-AUTH-SELF-DISABLED - Self registration disabled"
+                "ERR-AUTH-INVALID - Invalid login or password"
+                "ERR-PASS-INVALID - Invalid password"
+                "ERR-AUTH-CONFLICT - User already exists"
+                "ERR-OBJECT-WAS-FILE - Object was file"
+                "ERR-OBJECT-WAS-DIRECTORY - Object was directory"
+                "ERR-OBJECT-NO-ACCESS - User has no access to object"
+                "ERR-OBJECT-NOT-FOUND - Object not found"
+                "ERR-VERSION-IS-SELECTED - Version is main in object"
+                "ERR-VERSION-NOT-FOUND - Version not found"
+                "ERR-SHARE-NOT-FOUND - Share not found"
+                "ERR-DISCUSSION-NO-ACCESS - Discussion no access"
+                "ERR-DISCUSSION-NOT-FOUND - Discussion not found"
+                "ERR-AUDIT-NO-ACCESS - Audit no access"
+                "ERR-ADMIN-NO-ACCESS - No access to admin stuff"
+                "ERR-ADMIN-UNK-CONFIRM - Auth confirmation not found"
+                "ERR-USER-NOT-FOUND - User not found"
+                "ERR-BUSINESS-INVITE-INVALID - Invalid invite code"
+                "ERR-BUSINESS-USERDATA-PROVIDED - User data exists"
+                "ERR-STORAGE-QUOTA-LIMIT - User exceeded quota limit"
+            message:
+              type: string
+              example: "message"
+              description: Error message
 paths:
   /api/v1/user:
     parameters: []
@@ -3610,3 +3698,4 @@ paths:
                   smtp_enabled: true
                   force_twofactor: true
                   allow_self_registration: true
+
