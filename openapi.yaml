@@ -1,0 +1,3612 @@
+openapi: 3.0.0
+info:
+  title: v1
+  version: 1.0.0
+  description: ""
+servers:
+  - url: "{{address}}"
+  - url: ""
+  - url: i
+paths:
+  /api/v1/user:
+    parameters: []
+    get:
+      summary: api/v1/user
+      tags: &ref_0
+        - user
+      parameters:
+        - name: Accept-Language
+          in: header
+          required: false
+          description: Prefered Language
+          example: text/plain
+          schema:
+            type: string
+      responses:
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      email:
+                        type: string
+                        format: email
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      role:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                  email: dev@constructmg.ru
+                  name: john
+                  surname: doe
+                  role: admin
+    post:
+      summary: api/v1/user
+      tags: *ref_0
+      parameters: []
+      responses:
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "409":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 409 Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      email:
+                        type: string
+                        format: email
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      role:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                  email: dev@constructmg.ru
+                  name: john
+                  surname: doe
+                  role: admin
+    patch:
+      summary: api/v1/user
+      tags: *ref_0
+      parameters: []
+      responses:
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      email:
+                        type: string
+                        format: email
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      role:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                  email: dev@constructmg.ru
+                  name: john
+                  surname: doe
+                  role: admin
+  /api/v1/user/101b7e3c-1762-4a0f-ae92-6f91111a8b04:
+    parameters: []
+    get:
+      summary: api/v1/user/{{user_id}}
+      tags: *ref_0
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      email:
+                        type: string
+                        format: email
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      role:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: 101b7e3c-1762-4a0f-ae92-6f91111a8b04
+                  email: user@constructmg.ru
+                  name: john
+                  surname: doe the second
+                  role: user
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/invite:
+    parameters: []
+    post:
+      summary: api/v1/invite
+      tags:
+        - invite
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                      valid_until:
+                        type: string
+                        format: date-time
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  email: dev@constructmg.ru
+                  valid_until: "2044-01-01T00:00:00Z"
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/auth/2fa:
+    parameters: []
+    get:
+      summary: api/v1/auth/2fa
+      tags: &ref_1
+        - auth
+        - 2fa
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/auth/2fa/request:
+    parameters: []
+    get:
+      summary: api/v1/auth/2fa/request
+      tags: *ref_1
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK - Verify
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      action:
+                        type: string
+                      type:
+                        type: string
+                      id:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  action: verify
+                  type: email
+                  id: b57c7f47-77c9-4b70-9e22-3a428d2dd862
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "409":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 409 Conflict
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/auth/2fa/verify:
+    parameters: []
+    post:
+      summary: api/v1/auth/2fa/verify
+      tags: *ref_1
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      2fa_access_key:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  2fa_access_key: >-
+                    G3f7n9P1q4R6s2T8w1V7y3Z0a5B6m8Q2e9H4vL3xW1F0jD5cR7U8sX6oY2T5kJ4nO9eV8mA1zB7hT2rQ5iN3dU6pA8xR4vF9yT3dL5a
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/auth/signup/self:
+    parameters: []
+    post:
+      summary: api/v1/auth/signup/self
+      tags: &ref_2
+        - auth
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK - SMTP Enabled
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      confirmation_required:
+                        type: boolean
+                      auth_data:
+                        nullable: true
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  confirmation_required: true
+                  auth_data: null
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "409":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 409 Confilict
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/auth/signup/self/confirm:
+    parameters: []
+    post:
+      summary: api/v1/auth/signup/self/confirm
+      tags: *ref_2
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+            Set-Cookie:
+              schema:
+                type: string
+              example: >-
+                sessionToken=aC3wC1kV5QmJ5u4F9hBwr1Fw2ke3hyT8O1m1U3Kq2wW1k3yZtD0W4xYfT9Hw5gA6;
+                Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1209600;
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                      csrf_token:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  access_token: >-
+                    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJs6auEw8GxN5vWz4k1W5gAPQ6lR8yYB7E3k4
+                  csrf_token: 77386272-c8c8-42db-ad5d-78db36341297
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/auth/signup/invite:
+    parameters: []
+    post:
+      summary: api/v1/auth/signup/invite
+      tags: *ref_2
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+            Set-Cookie:
+              schema:
+                type: string
+              example: >-
+                sessionToken=aC3wC1kV5QmJ5u4F9hBwr1Fw2ke3hyT8O1m1U3Kq2wW1k3yZtD0W4xYfT9Hw5gA6;
+                Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1209600;
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                      csrf_token:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  access_token: >-
+                    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJs6auEw8GxN5vWz4k1W5gAPQ6lR8yYB7E3k4
+                  csrf_token: 77386272-c8c8-42db-ad5d-78db36341297
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "409":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 409 Confilict
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/auth/signin:
+    parameters: []
+    post:
+      summary: api/v1/auth/signin
+      tags: *ref_2
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+            Set-Cookie:
+              schema:
+                type: string
+              example: >-
+                sessionToken=aC3wC1kV5QmJ5u4F9hBwr1Fw2ke3hyT8O1m1U3Kq2wW1k3yZtD0W4xYfT9Hw5gA6;
+                Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1209600;
+          description: 200 OK - No 2FA Confirm
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      2fa_required:
+                        type: boolean
+                      auth_data:
+                        type: object
+                        properties:
+                          access_token:
+                            type: string
+                          expires_in:
+                            type: integer
+                          csrf_token:
+                            type: string
+                          user:
+                            type: object
+                            properties:
+                              id:
+                                type: string
+                              email:
+                                type: string
+                                format: email
+                              name:
+                                type: string
+                              surname:
+                                type: string
+                              role:
+                                type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  2fa_required: false
+                  auth_data:
+                    access_token: >-
+                      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJs6auEw8GxN5vWz4k1W5gAPQ6lR8yYB7E3k4
+                    expires_in: 3600
+                    csrf_token: 77386272-c8c8-42db-ad5d-78db36341297
+                    user:
+                      id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                      email: dev@constructmg.ru
+                      name: john
+                      surname: doe
+                      role: admin
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK - 2FA Required
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  2fa_required: true
+                  auth_data:
+                    access_token: >-
+                      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJs6auEw8GxN5vWz4k1W5gAPQ6lR8yYB7E3k4
+                    expires_in: 300
+                    csrf_token: 77386272-c8c8-42db-ad5d-78db36341297
+  /api/v1/auth/refresh:
+    parameters: []
+    get:
+      summary: api/v1/auth/refresh
+      tags: *ref_2
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                      expires_in:
+                        type: integer
+                      csrf_token:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  access_token: >-
+                    eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJs6auEw8GxN5vWz4k1W5gAPQ6lR8yYB7E3k4
+                  expires_in: 3600
+                  csrf_token: 77386272-c8c8-42db-ad5d-78db36341297
+  /api/v1/auth/logout:
+    parameters: []
+    get:
+      summary: api/v1/auth/logout
+      tags: *ref_2
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload: {}
+  /api/v1/auth/2fa/password:
+    parameters: []
+    patch:
+      summary: api/v1/auth/2fa/password
+      tags: *ref_2
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK - No 2FA Required
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload: {}
+  /api/v1/notifications:
+    parameters: []
+    get:
+      summary: api/v1/notifications
+      tags: &ref_3
+        - notifications
+      parameters: []
+      responses:
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      unread_count:
+                        type: integer
+                      total_count:
+                        type: integer
+                      unread:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                            id:
+                              type: string
+                            timestamp:
+                              type: string
+                              format: date-time
+                            role:
+                              type: string
+                            issuer:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+                      read:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                            id:
+                              type: string
+                            timestamp:
+                              type: string
+                              format: date-time
+                            issuer:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+                            file:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                name:
+                                  type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  unread_count: 3
+                  total_count: 20
+                  unread:
+                    - type: rights
+                      id: c1234567-d89e-1234-a456-426614174000
+                      timestamp: "2023-04-01T12:00:00Z"
+                      role: auditor
+                      issuer:
+                        id: c11e4e99-abef-43d4-b4b1-5f498684b620
+                        name: john
+                        surname: doe
+                    - type: rights_revoked
+                      id: c1234567-d89e-1234-a456-426614174000
+                      timestamp: "2023-04-01T12:00:00Z"
+                      role: auditor
+                      issuer:
+                        id: c11e4e99-abef-43d4-b4b1-5f498684b620
+                        name: john
+                        surname: doe
+                    - type: access_revoked
+                      id: c1234567-d89e-1234-a456-426614174000
+                      timestamp: "2023-04-01T12:00:00Z"
+                      issuer:
+                        id: c11e4e99-abef-43d4-b4b1-5f498684b620
+                        name: john
+                        surname: doe
+                      file:
+                        id: 7711cd2b-c5ba-4234-a949-e9778f64d7fe
+                        name: Презентация Q3.pptx
+                  read:
+                    - type: comment
+                      id: c1234567-d89e-1234-a456-426614174000
+                      timestamp: "2023-04-01T12:00:00Z"
+                      issuer:
+                        id: c11e4e99-abef-43d4-b4b1-5f498684b620
+                        name: john
+                        surname: doe
+                      file:
+                        id: 7711cd2b-c5ba-4234-a949-e9778f64d7fe
+                        name: Презентация Q3.pptx
+                    - type: access
+                      id: c1234567-d89e-1234-a456-426614174000
+                      timestamp: "2023-04-01T12:00:00Z"
+                      issuer:
+                        id: c11e4e99-abef-43d4-b4b1-5f498684b620
+                        name: john
+                        surname: doe
+                      file:
+                        id: 7711cd2b-c5ba-4234-a949-e9778f64d7fe
+                        name: Презентация Q3.pptx
+    delete:
+      summary: api/v1/notifications
+      tags: *ref_3
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      amount:
+                        type: integer
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  amount: 12
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/storage/used:
+    parameters: []
+    get:
+      summary: api/v1/storage/used
+      tags:
+        - storage
+      parameters: []
+      responses:
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      used_storage:
+                        type: integer
+                      total_storage:
+                        type: integer
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  used_storage: 444251000
+                  total_storage: 10737418240
+  /api/v1/directory/root:
+    parameters: []
+    get:
+      summary: api/v1/directory/{{directory}}
+      tags: &ref_4
+        - directory
+      parameters: []
+      responses:
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "404":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 404 Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK - Root Directory
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      count:
+                        type: integer
+                      objects:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            version:
+                              type: string
+                            name:
+                              type: string
+                            size:
+                              type: integer
+                            favorite:
+                              type: boolean
+                            access_type:
+                              type: string
+                            access:
+                              type: integer
+                            type:
+                              type: string
+                            user:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+                            updated_at:
+                              type: string
+                              format: date-time
+                            created_at:
+                              type: string
+                              format: date-time
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  total: 100
+                  count: 1
+                  objects:
+                    - id: b33619df-507e-4728-8ab1-4b86b0d7200b
+                      version: 6cd99078-d4af-4f9a-8b03-614c43fe0cc0
+                      name: photo_2025-07-07_21-00-50.jpg
+                      size: 2400000
+                      favorite: false
+                      access_type: owner
+                      access: 6
+                      type: >-
+                        application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                      user:
+                        id: 34409659-a9ca-48c9-9b3f-b88111828161
+                        name: john
+                        surname: doe
+                      updated_at: "2023-04-01T12:00:00Z"
+                      created_at: "2023-04-01T12:00:00Z"
+  /api/v1/directory/{directory}:
+    parameters:
+      - name: directory
+        in: path
+        required: true
+        example: "{{directory}}"
+        schema:
+          type: string
+    patch:
+      summary: api/v1/directory/{{directory}}
+      tags: *ref_4
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: b33619df-507e-4728-8ab1-4b86b0d7200b
+                  version: 6cd99078-d4af-4f9a-8b03-614c43fe0cc0
+                  name: photo_2025-07-07_21-00-50.jpg
+                  size: 2400000
+                  favorite: false
+                  access_type: owner
+                  access: 6
+                  type: >-
+                    application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                  user:
+                    id: 34409659-a9ca-48c9-9b3f-b88111828161
+                    name: john
+                    surname: doe
+                  updated_at: "2023-04-01T12:00:00Z"
+                  created_at: "2023-04-01T12:00:00Z"
+  /api/v1/directory/create:
+    parameters: []
+    post:
+      summary: api/v1/directory/create
+      tags: *ref_4
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: b33619df-507e-4728-8ab1-4b86b0d7200b
+                  version: 6cd99078-d4af-4f9a-8b03-614c43fe0cc0
+                  name: photo_2025-07-07_21-00-50.jpg
+                  size: 2400000
+                  favorite: false
+                  access_type: owner
+                  access: 6
+                  type: >-
+                    application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                  user:
+                    id: 34409659-a9ca-48c9-9b3f-b88111828161
+                    name: john
+                    surname: doe
+                  updated_at: "2023-04-01T12:00:00Z"
+                  created_at: "2023-04-01T12:00:00Z"
+  /api/v1/trash/{directory}:
+    parameters:
+      - name: directory
+        in: path
+        required: true
+        example: "{{directory}}"
+        schema:
+          type: string
+    get:
+      summary: api/v1/trash/{{directory}}
+      tags: &ref_5
+        - trash
+      parameters: []
+      responses:
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "404":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 404 Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK - Root Directory
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      count:
+                        type: integer
+                      objects:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            version:
+                              type: string
+                            name:
+                              type: string
+                            size:
+                              type: integer
+                            favorite:
+                              type: boolean
+                            access_type:
+                              type: string
+                            access:
+                              type: integer
+                            type:
+                              type: string
+                            user:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+                            updated_at:
+                              type: string
+                              format: date-time
+                            created_at:
+                              type: string
+                              format: date-time
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  total: 100
+                  count: 1
+                  objects:
+                    - id: b33619df-507e-4728-8ab1-4b86b0d7200b
+                      version: 6cd99078-d4af-4f9a-8b03-614c43fe0cc0
+                      name: photo_2025-07-07_21-00-50.jpg
+                      size: 2400000
+                      favorite: false
+                      access_type: owner
+                      access: 6
+                      type: >-
+                        application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                      user:
+                        id: 34409659-a9ca-48c9-9b3f-b88111828161
+                        name: john
+                        surname: doe
+                      updated_at: "2023-04-01T12:00:00Z"
+                      created_at: "2023-04-01T12:00:00Z"
+    patch:
+      summary: api/v1/trash/{{directory}}
+      tags: *ref_5
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      version:
+                        type: string
+                      name:
+                        type: string
+                      size:
+                        type: integer
+                      favorite:
+                        type: boolean
+                      access_type:
+                        type: string
+                      access:
+                        type: integer
+                      type:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          name:
+                            type: string
+                          surname:
+                            type: string
+                      updated_at:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: b33619df-507e-4728-8ab1-4b86b0d7200b
+                  version: 6cd99078-d4af-4f9a-8b03-614c43fe0cc0
+                  name: photo_2025-07-07_21-00-50.jpg
+                  size: 2400000
+                  favorite: false
+                  access_type: owner
+                  access: 6
+                  type: >-
+                    application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                  user:
+                    id: 34409659-a9ca-48c9-9b3f-b88111828161
+                    name: john
+                    surname: doe
+                  updated_at: "2023-04-01T12:00:00Z"
+                  created_at: "2023-04-01T12:00:00Z"
+  /api/v1/object/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    get:
+      summary: api/v1/object/{{id}}
+      tags: &ref_6
+        - object
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: b33619df-507e-4728-8ab1-4b86b0d7200b
+                  version: 6cd99078-d4af-4f9a-8b03-614c43fe0cc0
+                  name: photo_2025-07-07_21-00-50.jpg
+                  size: 2400000
+                  favorite: false
+                  access_type: owner
+                  access: 6
+                  type: >-
+                    application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                  user:
+                    id: 34409659-a9ca-48c9-9b3f-b88111828161
+                    name: john
+                    surname: doe
+                  updated_at: "2023-04-01T12:00:00Z"
+                  created_at: "2023-04-01T12:00:00Z"
+  /api/v1/object/37a1ccbd-95d0-460e-8364-1345ec2c1adb/preview:
+    parameters: []
+    get:
+      summary: api/v1/object/{{id}}/preview
+      tags: *ref_6
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: image/jpeg
+            Content-Length:
+              schema:
+                type: integer
+              example: "1234567"
+            Cache-Control:
+              schema:
+                type: string
+              example: public, max-age=86400
+          description: 200 OK
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "404":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 404 Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/object/6e6c2487-c01e-4262-bd85-224fbb5c0a1a/shares:
+    parameters: []
+    get:
+      summary: api/v1/object/{{id}}/shares
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example: null
+  /api/v1/object/{id}/access:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    get:
+      summary: api/v1/object/{{id}}/access
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example: null
+  /api/v1/object/{id}/versions:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    get:
+      summary: api/v1/object/{{id}}/versions
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  versions:
+                    - id: 0c450172-7d91-45d7-a4c0-491921498ff3
+                      title: document.docx
+                      size: 9999999
+                      created_at: "2023-04-01T12:00:00Z"
+                      user:
+                        id: 0c450172-7d91-45d7-a4c0-491921498ff3
+                        name: john
+                        surname: doe
+  /api/v1/object/{id}/snapshot:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    get:
+      summary: api/v1/object/{{id}}/snapshot
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example: null
+  /api/v1/object/{id}/discussion:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    get:
+      summary: api/v1/object/{{id}}/discussion
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  count: 12
+                  responses:
+                    - id: 9e882f7d-586a-485c-8e66-25f1981be183
+                      responses: 0
+                      updated_at: "2023-04-01T12:00:00Z"
+                      created_at: "2023-04-01T12:00:00Z"
+                      message: "+a.petrova@company.com, Есть\_несколько\_предложений\_по\_улучшению\_дизайна.\_Можем\_обсудить\_на\_встрече?"
+                      user:
+                        id: a26c9601-e2f2-46ae-8d42-159b759cf345
+                        email: dev@constructmg.ru
+                        name: john
+                        surname: doe
+                    - id: 03bb9a71-0703-41cf-b9c9-32527d49b146
+                      responses: 1
+                      updated_at: "2023-04-01T12:00:00Z"
+                      created_at: "2023-04-01T12:00:00Z"
+                      message: >-
+                        Отличная работа! Презентация выглядит профессионально.
+                        Особенно понравились слайды с аналитикой.
+                      user:
+                        id: a26c9601-e2f2-46ae-8d42-159b759cf345
+                        email: dev@constructmg.ru
+                        name: john
+                        surname: doe
+                    - id: 03bb9a71-0703-41cf-b9c9-32527d49b146
+                      responses: 0
+                      updated_at: "2023-04-01T12:00:00Z"
+                      created_at: "2023-04-01T12:00:00Z"
+                      message: >-
+                        Отличная работа! Презентация выглядит профессионально.
+                        Особенно понравились слайды с аналитикой.
+                      user:
+                        id: a26c9601-e2f2-46ae-8d42-159b759cf345
+                        email: dev@constructmg.ru
+                        name: john
+                        surname: doe
+  /api/v1/object/{id}/discussion/reply:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    post:
+      summary: api/v1/object/{{id}}/discussion/reply
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      responses:
+                        type: integer
+                      updated_at:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+                      message:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                          email:
+                            type: string
+                            format: email
+                          name:
+                            type: string
+                          surname:
+                            type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: 9e882f7d-586a-485c-8e66-25f1981be183
+                  responses: 0
+                  updated_at: "2023-04-01T12:00:00Z"
+                  created_at: "2023-04-01T12:00:00Z"
+                  message: some comment about file
+                  user:
+                    id: a26c9601-e2f2-46ae-8d42-159b759cf345
+                    email: dev@constructmg.ru
+                    name: john
+                    surname: doe
+  /api/v1/object/{id}/share:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    post:
+      summary: api/v1/object/{{id}}/share
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example: null
+  /api/v1/object/download:
+    parameters: []
+    post:
+      summary: api/v1/object/download
+      tags: *ref_6
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/zip
+            Content-Disposition:
+              schema:
+                type: string
+              example: attachment; filename="files.zip"
+            Content-Length:
+              schema:
+                type: integer
+              example: "1234567"
+            Cache-Control:
+              schema:
+                type: string
+              example: no-cache
+          description: 200 OK
+        "401":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 401 Unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 403 Forbidden
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        "404":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 404 Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/file/favorite:
+    parameters: []
+    post:
+      summary: api/v1/object/favorite
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                      objects:
+                        type: array
+                        items:
+                          type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  count: 2
+                  objects:
+                    - 01c1d37e-197e-472e-a6e9-806c96f1708e
+                    - 93113676-1062-4b14-8a46-41bc06bcdc7e
+  /api/v1/file/unfavorite:
+    parameters: []
+    post:
+      summary: api/v1/object/unfavorite
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                      objects:
+                        type: array
+                        items:
+                          type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  count: 2
+                  objects:
+                    - 01c1d37e-197e-472e-a6e9-806c96f1708e
+                    - 93113676-1062-4b14-8a46-41bc06bcdc7e
+  /api/v1/object/trash:
+    parameters: []
+    post:
+      summary: api/v1/object/trash
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                      objects:
+                        type: array
+                        items:
+                          type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  count: 2
+                  objects:
+                    - 01c1d37e-197e-472e-a6e9-806c96f1708e
+                    - 93113676-1062-4b14-8a46-41bc06bcdc7e
+  /api/v1/object/delete:
+    parameters: []
+    post:
+      summary: api/v1/object/delete
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                      objects:
+                        type: array
+                        items:
+                          type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  count: 2
+                  objects:
+                    - 01c1d37e-197e-472e-a6e9-806c96f1708e
+                    - 93113676-1062-4b14-8a46-41bc06bcdc7e
+  /api/v1/object/restore:
+    parameters: []
+    post:
+      summary: api/v1/object/restore
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  count: 2
+                  objects:
+                    - 01c1d37e-197e-472e-a6e9-806c96f1708e
+                    - 93113676-1062-4b14-8a46-41bc06bcdc7e
+  /api/v1/object/move:
+    parameters: []
+    post:
+      summary: api/v1/object/move
+      tags: *ref_6
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                      destination:
+                        type: string
+                      objects:
+                        type: array
+                        items:
+                          type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  count: 2
+                  destination: d6b6cf02-e114-46eb-9121-22fbd1c5e468
+                  objects:
+                    - 01c1d37e-197e-472e-a6e9-806c96f1708e
+                    - 93113676-1062-4b14-8a46-41bc06bcdc7e
+  /api/v1/object/copy:
+    parameters: []
+    post:
+      summary: api/v1/object/copy
+      tags: *ref_6
+      parameters: []
+      responses:
+        "507":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 507 Insufficient Storage
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                      destination:
+                        type: string
+                      objects:
+                        type: array
+                        items:
+                          type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  count: 2
+                  destination: d6b6cf02-e114-46eb-9121-22fbd1c5e468
+                  objects:
+                    - 09360900-0c1c-4116-a204-c84c73c9b4cd
+                    - 5a1e00d0-935f-46d4-9356-e2bc7da64e8b
+  /api/v1/object/upload:
+    parameters: []
+    post:
+      summary: api/v1/object/upload
+      tags: *ref_6
+      parameters: []
+      responses:
+        "507":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 507 Insufficient Storage
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  count: 2
+                  destination: d6b6cf02-e114-46eb-9121-22fbd1c5e468
+                  objects:
+                    - id: b33619df-507e-4728-8ab1-4b86b0d7200b
+                      name: photo_2025-07-07_21-00-50.jpg
+                      type: image/jpeg
+                      size: 2400000
+                      updated_at: "2023-04-01T12:00:00Z"
+                      created_at: "2023-04-01T12:00:00Z"
+                      access_type: owner
+                      favorite: false
+                      user:
+                        id: 01c1d37e-197e-472e-a6e9-806c96f1708e
+                        name: john
+                        surname: doe
+                    - id: b33619df-507e-4728-8ab1-4b86b0d7200b
+                      name: photo_2025-07-07_21-00-50.jpg
+                      type: image/jpeg
+                      size: 2400000
+                      updated_at: "2023-04-01T12:00:00Z"
+                      created_at: "2023-04-01T12:00:00Z"
+                      access_type: owner
+                      favorite: false
+                      user:
+                        id: 01c1d37e-197e-472e-a6e9-806c96f1708e
+                        name: john
+                        surname: doe
+  /api/v1/version/{id}/restore:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    get:
+      summary: api/v1/version/{{id}}/restore
+      tags: &ref_7
+        - version
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: b33619df-507e-4728-8ab1-4b86b0d7200b
+                  version: 6cd99078-d4af-4f9a-8b03-614c43fe0cc0
+                  name: photo_2025-07-07_21-00-50.jpg
+                  size: 2400000
+                  favorite: false
+                  access_type: owner
+                  access: 6
+                  type: >-
+                    application/vnd.openxmlformats-officedocument.wordprocessingml.document
+                  user:
+                    id: 34409659-a9ca-48c9-9b3f-b88111828161
+                    name: john
+                    surname: doe
+                  updated_at: "2023-04-01T12:00:00Z"
+                  created_at: "2023-04-01T12:00:00Z"
+  /api/v1/version/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    delete:
+      summary: api/v1/version/{{id}}
+      tags: *ref_7
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: 6cd99078-d4af-4f9a-8b03-614c43fe0cc0
+  /api/v1/share/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    delete:
+      summary: api/v1/share/{{id}}
+      tags: &ref_8
+        - share
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: 56968ec5-a211-41d3-8d18-9c2040e06791
+    patch:
+      summary: api/v1/share/{{id}}
+      tags: *ref_8
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example: null
+  /api/v1/discussion/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    get:
+      summary: api/v1/discussion/{{id}}
+      tags: &ref_9
+        - discussion
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: 9e882f7d-586a-485c-8e66-25f1981be183
+                  responses: 1
+                  updated_at: "2023-04-01T12:00:00Z"
+                  created_at: "2023-04-01T12:00:00Z"
+                  message: >-
+                    Отличная работа! Презентация выглядит профессионально.
+                    Особенно понравились слайды с аналитикой.
+                  user:
+                    id: a26c9601-e2f2-46ae-8d42-159b759cf345
+                    email: dev@constructmg.ru
+                    name: john
+                    surname: doe
+    delete:
+      summary: api/v1/discussion/{{id}}
+      tags: *ref_9
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: 9e882f7d-586a-485c-8e66-25f1981be183
+    patch:
+      summary: api/v1/discussion/{{id}}
+      tags: *ref_9
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  id: 9e882f7d-586a-485c-8e66-25f1981be183
+                  responses: 1
+                  updated_at: "2023-04-01T12:00:00Z"
+                  created_at: "2024-04-01T12:00:00Z"
+                  message: худшая работа в мире что я видел переделывай
+                  user:
+                    id: a26c9601-e2f2-46ae-8d42-159b759cf345
+                    email: dev@constructmg.ru
+                    name: john
+                    surname: doe
+  /api/v1/discussion/responses:
+    parameters: []
+    get:
+      summary: api/v1/discussion/{{id}}/responses
+      tags: *ref_9
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  count: 1
+                  responses:
+                    - id: 9e882f7d-586a-485c-8e66-25f1981be183
+                      responses: 0
+                      updated_at: "2023-04-01T12:00:00Z"
+                      created_at: "2023-04-01T12:00:00Z"
+                      message: "+a.petrova@company.com, Есть\_несколько\_предложений\_по\_улучшению\_дизайна.\_Можем\_обсудить\_на\_встрече?"
+                      user:
+                        id: a26c9601-e2f2-46ae-8d42-159b759cf345
+                        email: dev@constructmg.ru
+                        name: john
+                        surname: doe
+  /api/v1/audit:
+    parameters: []
+    get:
+      summary: api/v1/audit
+      tags: &ref_10
+        - audit
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example: null
+  /api/v1/audit/export:
+    parameters: []
+    get:
+      summary: api/v1/audit/export
+      tags: *ref_10
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: text/csv
+            Content-Disposition:
+              schema:
+                type: string
+              example: attachment; filename="audit-2025-09-29T23:46:50Z.csv"
+          description: 200 OK
+  /api/v1/admin/auth/confirm:
+    parameters: []
+    post:
+      summary: api/v1/admin/auth/confirm
+      tags: &ref_11
+        - admin
+        - auth
+      parameters: []
+      responses:
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 404 Not Found
+          content:
+            application/json:
+              schema: {}
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload: {}
+  /api/v1/admin/signup:
+    parameters: []
+    post:
+      summary: api/v1/admin/auth/signup
+      tags: *ref_11
+      parameters: []
+      responses:
+        "400":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 400 Bad Request
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+            Set-Cookie:
+              schema:
+                type: string
+              example: >-
+                sessionToken=aC3wC1kV5QmJ5u4F9hBwr1Fw2ke3hyT8O1m1U3Kq2wW1k3yZtD0W4xYfT9Hw5gA6;
+                Path=/; HttpOnly; Secure; SameSite=Strict; Max-Age=1209600;
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      confirmation_required:
+                        type: boolean
+                      auth_data:
+                        type: object
+                        properties:
+                          access_token:
+                            type: string
+                          csrf_token:
+                            type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  confirmation_required: false
+                  auth_data:
+                    access_token: >-
+                      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJs6auEw8GxN5vWz4k1W5gAPQ6lR8yYB7E3k4
+                    csrf_token: 77386272-c8c8-42db-ad5d-78db36341297
+  /api/v1/admin/storage/info:
+    parameters: []
+    get:
+      summary: api/v1/admin/storage/info
+      tags: &ref_12
+        - admin
+        - storage
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example: null
+  /api/v1/admin/storage/quota:
+    parameters: []
+    patch:
+      summary: api/v1/admin/storage/quota
+      tags: *ref_12
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/admin/storage/time:
+    parameters: []
+    patch:
+      summary: api/v1/admin/storage/time
+      tags: *ref_12
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+  /api/v1/admin/user/stats:
+    parameters: []
+    get:
+      summary: api/v1/admin/user/stats
+      tags: &ref_13
+        - admin
+        - user
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  regular: 39
+                  auditors: 2
+                  admins: 1
+  /api/v1/admin/user/list:
+    parameters: []
+    get:
+      summary: api/v1/admin/user/list
+      tags: *ref_13
+      parameters:
+        - name: page
+          in: query
+          required: false
+          example: "1"
+          schema:
+            deprecated: false
+        - name: count
+          in: query
+          required: false
+          example: "50"
+          schema:
+            deprecated: false
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                            email:
+                              type: string
+                              format: email
+                            role:
+                              type: string
+                            name:
+                              type: string
+                            surname:
+                              type: string
+                            created_at:
+                              type: string
+                              format: date-time
+                            last_login:
+                              type: string
+                              format: date-time
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  total: 120
+                  users:
+                    - id: caccff62-292e-425c-a52f-3f0f7754bf3b
+                      email: dev@constructmg.ru
+                      role: admin
+                      name: john
+                      surname: doe
+                      created_at: "2023-04-01T12:00:00Z"
+                      last_login: "2023-04-01T12:00:00Z"
+  /api/v1/admin/user/{id}/info:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    get:
+      summary: api/v1/admin/user/{{id}}/info
+      tags: *ref_13
+      parameters: []
+      responses:
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 404 Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      regular:
+                        type: integer
+                      auditors:
+                        type: integer
+                      admins:
+                        type: integer
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  regular: 39
+                  auditors: 2
+                  admins: 1
+  /api/v1/admin/user/{id}/activate:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    get:
+      summary: api/v1/admin/user/{{id}}/activate
+      tags: *ref_13
+      parameters: []
+      responses:
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 404 Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      regular:
+                        type: integer
+                      auditors:
+                        type: integer
+                      admins:
+                        type: integer
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  regular: 39
+                  auditors: 2
+                  admins: 1
+  /v1/admin/user/{id}/deactivate:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        example: "{{id}}"
+        schema:
+          type: string
+    get:
+      summary: api/v1/admin/user/{{id}}/deactivate
+      tags: *ref_13
+      parameters: []
+      responses:
+        "403":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 404 Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      regular:
+                        type: integer
+                      auditors:
+                        type: integer
+                      admins:
+                        type: integer
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  regular: 39
+                  auditors: 2
+                  admins: 1
+  /api/v1/admin/user/invite:
+    parameters: []
+    post:
+      summary: api/v1/admin/user/invite
+      tags: *ref_13
+      parameters: []
+      responses:
+        "409":
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 409 Conflict
+          content:
+            application/json:
+              schema: {}
+              example: null
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      invite_code:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  invite_code: >-
+                    9PR4bA3d3Fi82vCC4TeRKiuEWgJphjHftA7WQWfG3WcJAmzCduXGVXuhgBa5r5wBy8DzuGRiHxT8xXn3NQqKNERWz9cwjgJ8B1kjPj4vDT3JjFgyELB1SpbtudTyJz3S
+  /api/v1/admin/user/update:
+    parameters: []
+    patch:
+      summary: api/v1/admin/user/{{id}}update
+      tags: *ref_13
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      invite_code:
+                        type: string
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  invite_code: >-
+                    9PR4bA3d3Fi82vCC4TeRKiuEWgJphjHftA7WQWfG3WcJAmzCduXGVXuhgBa5r5wBy8DzuGRiHxT8xXn3NQqKNERWz9cwjgJ8B1kjPj4vDT3JjFgyELB1SpbtudTyJz3S
+  /api/v1/admin/security/password:
+    parameters: []
+    patch:
+      summary: api/v1/admin/security/password
+      tags: &ref_14
+        - admin
+        - security
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                deprecated: false
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema: {}
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  length: 8
+                  capitalisation: true
+                  numerics: true
+                  special: true
+  /api/v1/admin/security/special:
+    parameters: []
+    patch:
+      summary: api/v1/admin/security/special
+      tags: *ref_14
+      parameters: []
+      responses:
+        default:
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      force_2fa:
+                        type: boolean
+                      enable_totp:
+                        type: boolean
+                      enable_smtp:
+                        type: boolean
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  force_2fa: true
+                  enable_totp: true
+                  enable_smtp: true
+  /api/v1/system:
+    parameters: []
+    get:
+      summary: api/v1/system
+      tags: []
+      parameters: []
+      responses:
+        "200":
+          headers:
+            Content-Type:
+              schema:
+                type: string
+              example: application/json
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      frontend_url:
+                        type: string
+                      default_language:
+                        type: string
+                      smtp_enabled:
+                        type: boolean
+                      force_twofactor:
+                        type: boolean
+                      allow_self_registration:
+                        type: boolean
+              example:
+                success: true
+                track_data:
+                  request_id: f47ac10b-58cc-4372-a567-0e02b2c3d479
+                  issuer_id: a1b2c3d4-e5f6-7g8h-9i0j-k1l2m3n4o5p6
+                payload:
+                  frontend_url: cloudyy.constructmg.ru
+                  default_language: en-us
+                  smtp_enabled: true
+                  force_twofactor: true
+                  allow_self_registration: true
