@@ -1,100 +1,12 @@
 openapi: 3.0.0
 info:
-  title: Cloudyy API Reference
+  title: v1
   version: 1.0.0
+  description: ""
 servers:
-  - url: https://local.cloudyy.ru/api/v1
-    description: Local API development environment
-  - url: https://dev.cloudyy.ru/api/v1
-    description: Remote API environment that contains mocks
-  - url: https://api.cloudyy.ru/api/v1
-    description: Remote API environment that contains live service
-components:
-  schemas:
-    ErrorResponse:
-      type: object
-      properties:
-        success:
-          type: boolean
-          example: false
-          description: Indicates whether the request was successful or not.
-        track_data:
-          type: object
-          properties:
-            request_id:
-              type: string
-              example: "a6504b6a-ab90-4be5-a434-1b8e6aff3af6"
-              description: Unique identifier for the request.
-            issuer_id:
-              type: string
-              example: "391b1dcc-6b88-425f-9398-d898c76b5450"
-              description: Unique identifier for the issuer of the request.
-        error:
-          type: object
-          properties:
-            code:
-              type: string
-              example: "ERR-XXX"
-              enum:
-                - "ERR-BEARER-UNAUTH"
-                - "ERR-BEARER-EXPIRED"
-                - "ERR-BEARER-NOTFOUND"
-                - "ERR-BEARER-NBF"
-                - "ERR-BEARER-IAT"
-                - "ERR-BEARER-ALG"
-                - "ERR-CSRF-INV-REF"
-                - "ERR-CSRF-INV-ORI"
-                - "ERR-CSRF-INV-TOK"
-                - "ERR-CSRF-EMP-TOK"
-                - "ERR-CSRF-EMP-REF"
-                - "ERR-2FA-REQUIRED"
-                - "ERR-2FA-INV-TYPE"
-                - "ERR-2FA-INV-ACTION"
-                - "ERR-2FA-INV-ID"
-                - "ERR-2FA-INV-CODE"
-                - "ERR-2FA-UNK-TYPE"
-                - "ERR-2FA-CON-TYPE"
-                - "ERR-SECURITY-INV-EMAIL"
-                - "ERR-SECURITY-INV-PASSWORD"
-                - "ERR-SECURITY-INV-USERDATA"
-                - "ERR-SECURITY-INV-PASSLENGTH"
-                - "ERR-SECURITY-INV-NOTIF-LIMIT"
-                - "ERR-SECURITY-INV-DIR-PAGE"
-                - "ERR-SECURITY-INV-DIR-SIZE"
-                - "ERR-SECURITY-INV-DIR-SORT"
-                - "ERR-SECURITY-INV-DIR-TYPE"
-                - "ERR-SECURITY-INV-DATE"
-                - "ERR-SECURITY-INV-DEST"
-                - "ERR-AUTH-SESSION-INVALID"
-                - "ERR-AUTH-INVITE-INVALID"
-                - "ERR-AUTH-INVITE-EXPIRED"
-                - "ERR-AUTH-INVITE-CONFLICT"
-                - "ERR-AUTH-CODE-INVALID"
-                - "ERR-AUTH-CODE-EXPIRED"
-                - "ERR-AUTH-SELF-DISABLED"
-                - "ERR-AUTH-INVALID"
-                - "ERR-PASS-INVALID"
-                - "ERR-AUTH-CONFLICT"
-                - "ERR-OBJECT-WAS-FILE"
-                - "ERR-OBJECT-WAS-DIRECTORY"
-                - "ERR-OBJECT-NO-ACCESS"
-                - "ERR-OBJECT-NOT-FOUND"
-                - "ERR-VERSION-IS-SELECTED"
-                - "ERR-VERSION-NOT-FOUND"
-                - "ERR-SHARE-NOT-FOUND"
-                - "ERR-DISCUSSION-NO-ACCESS"
-                - "ERR-DISCUSSION-NOT-FOUND"
-                - "ERR-AUDIT-NO-ACCESS"
-                - "ERR-ADMIN-NO-ACCESS"
-                - "ERR-ADMIN-UNK-CONFIRM"
-                - "ERR-USER-NOT-FOUND"
-                - "ERR-BUSINESS-INVITE-INVALID"
-                - "ERR-BUSINESS-USERDATA-PROVIDED"
-                - "ERR-STORAGE-QUOTA-LIMIT"
-            message:
-              type: string
-              example: "An error occurred"
-              description: Error message
+  - url: "{{address}}"
+  - url: ""
+  - url: i
 paths:
   /api/v1/user:
     parameters: []
@@ -121,7 +33,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -132,7 +45,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -194,7 +108,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "401":
           headers:
             Content-Type:
@@ -205,7 +120,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -216,7 +132,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "409":
           headers:
             Content-Type:
@@ -227,7 +144,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -289,7 +207,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "401":
           headers:
             Content-Type:
@@ -300,7 +219,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -311,7 +231,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -421,7 +342,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -432,7 +354,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/invite:
     parameters: []
     post:
@@ -489,7 +412,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/auth/2fa:
     parameters: []
     get:
@@ -509,7 +433,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "401":
           headers:
             Content-Type:
@@ -520,7 +445,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/auth/2fa/request:
     parameters: []
     get:
@@ -577,7 +503,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "401":
           headers:
             Content-Type:
@@ -588,7 +515,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -599,7 +527,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "409":
           headers:
             Content-Type:
@@ -610,7 +539,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/auth/2fa/verify:
     parameters: []
     post:
@@ -662,7 +592,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "401":
           headers:
             Content-Type:
@@ -673,7 +604,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -684,7 +616,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/auth/signup/self:
     parameters: []
     post:
@@ -739,7 +672,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "409":
           headers:
             Content-Type:
@@ -750,7 +684,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/auth/signup/self/confirm:
     parameters: []
     post:
@@ -811,7 +746,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/auth/signup/invite:
     parameters: []
     post:
@@ -872,7 +808,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "409":
           headers:
             Content-Type:
@@ -883,7 +820,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/auth/signin:
     parameters: []
     post:
@@ -1110,7 +1048,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "401":
           headers:
             Content-Type:
@@ -1121,7 +1060,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -1132,7 +1072,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -1316,7 +1257,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -1327,7 +1269,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/storage/used:
     parameters: []
     get:
@@ -1346,7 +1289,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -1357,7 +1301,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -1412,7 +1357,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "401":
           headers:
             Content-Type:
@@ -1423,7 +1369,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -1434,7 +1381,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "404":
           headers:
             Content-Type:
@@ -1445,7 +1393,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -1640,7 +1589,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "401":
           headers:
             Content-Type:
@@ -1651,7 +1601,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -1662,7 +1613,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "404":
           headers:
             Content-Type:
@@ -1673,7 +1625,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -1920,7 +1873,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -1931,7 +1885,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "404":
           headers:
             Content-Type:
@@ -1942,7 +1897,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/object/6e6c2487-c01e-4262-bd85-224fbb5c0a1a/shares:
     parameters: []
     get:
@@ -2249,7 +2205,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "403":
           headers:
             Content-Type:
@@ -2260,7 +2217,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         "404":
           headers:
             Content-Type:
@@ -2271,7 +2229,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/file/favorite:
     parameters: []
     post:
@@ -2554,7 +2513,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -2615,7 +2575,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -3017,7 +2978,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -3105,7 +3067,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/admin/storage/time:
     parameters: []
     patch:
@@ -3123,7 +3086,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
   /api/v1/admin/user/stats:
     parameters: []
     get:
@@ -3257,7 +3221,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -3320,7 +3285,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
@@ -3383,7 +3349,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponse'
+                type: object
+              example: null
         default:
           headers:
             Content-Type:
