@@ -1,0 +1,463 @@
+openapi: 3.0.0
+
+info:
+  title: Cloudyy API
+  version: 1.0.0
+  description: An API specification for Cloudyy project
+
+servers:
+  - url: https://api.cloudyy.ru
+    description: Production server
+  - url: https://staging.api.cloudyy.ru
+    description: Staging server
+  - url: https://local.api.cloudyy.ru
+    description: Local development server
+
+security:
+  - BearerAuth: []
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    BaseAccessContract:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: A UUID representing the unique identifier of the access entry.
+        type:
+          type: string
+          description: Access levels that can be assigned to objects
+        user:
+          $ref: '#/components/schemas/BaseUserContract'
+
+    BaseAuditContract:
+      type: object
+      properties:
+        trace_id:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/AuditType'
+        timestamp:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/BaseUserContract'
+        action:
+          type: string
+        details:
+          type: array
+          items:
+            $ref: '#/components/schemas/BaseAuditDetailsContract'
+
+    BaseAuditDetailsContract:
+      type: object
+      properties:
+        name:
+          type: string
+        value:
+          type: string
+
+    BaseAuthDataContract:
+      type: object
+      properties:
+        access_token:
+          type: string
+        csrf_token:
+          type: string
+        expires_in:
+          type: integer
+          format: int64
+        user:
+          $ref: '#/components/schemas/BaseUserContract'
+          nullable: true
+
+    BaseDiscussionContract:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        responses:
+          type: integer
+          format: int64
+        updated_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+        message:
+          type: string
+        user:
+          $ref: '#/components/schemas/BaseUserContract'
+
+    BaseErrorContract:
+      type: object
+      properties:
+        code:
+          type: string
+          enum:
+            - ERR-BEARER-UNAUTH
+            - ERR-BEARER-EXPIRED
+            - ERR-BEARER-NOTFOUND
+            - ERR-BEARER-NBF
+            - ERR-BEARER-IAT
+            - ERR-BEARER-ALG
+            - ERR-CSRF-INV-REF
+            - ERR-CSRF-INV-ORI
+            - ERR-CSRF-INV-TOK
+            - ERR-CSRF-EMP-TOK
+            - ERR-CSRF-EMP-REF
+            - ERR-2FA-REQUIRED
+            - ERR-2FA-INV-TYPE
+            - ERR-2FA-INV-ACTION
+            - ERR-2FA-INV-ID
+            - ERR-2FA-INV-CODE
+            - ERR-2FA-UNK-TYPE
+            - ERR-2FA-CON-TYPE
+            - ERR-SECURITY-INV-EMAIL
+            - ERR-SECURITY-INV-PASSWORD
+            - ERR-SECURITY-INV-USERDATA
+            - ERR-SECURITY-INV-PASSLENGTH
+            - ERR-SECURITY-INV-NOTIF-LIMIT
+            - ERR-SECURITY-INV-DIR-PAGE
+            - ERR-SECURITY-INV-DIR-SIZE
+            - ERR-SECURITY-INV-DIR-SORT
+            - ERR-SECURITY-INV-DIR-TYPE
+            - ERR-SECURITY-INV-DATE
+            - ERR-SECURITY-INV-DEST
+            - ERR-AUTH-SESSION-INVALID
+            - ERR-AUTH-INVITE-INVALID
+            - ERR-AUTH-INVITE-EXPIRED
+            - ERR-AUTH-INVITE-CONFLICT
+            - ERR-AUTH-CODE-INVALID
+            - ERR-AUTH-CODE-EXPIRED
+            - ERR-AUTH-SELF-DISABLED
+            - ERR-AUTH-INVALID
+            - ERR-PASS-INVALID
+            - ERR-AUTH-CONFLICT
+            - ERR-OBJECT-WAS-FILE
+            - ERR-OBJECT-WAS-DIRECTORY
+            - ERR-OBJECT-NO-ACCESS
+            - ERR-OBJECT-NOT-FOUND
+            - ERR-VERSION-IS-SELECTED
+            - ERR-VERSION-NOT-FOUND
+            - ERR-SHARE-NOT-FOUND
+            - ERR-DISCUSSION-NO-ACCESS
+            - ERR-DISCUSSION-NOT-FOUND
+            - ERR-AUDIT-NO-ACCESS
+            - ERR-ADMIN-NO-ACCESS
+            - ERR-ADMIN-UNK-CONFIRM
+            - ERR-USER-NOT-FOUND
+            - ERR-BUSINESS-INVITE-INVALID
+            - ERR-BUSINESS-USERDATA-PROVIDED
+            - ERR-STORAGE-QUOTA-LIMIT
+          default: ERR-XXX-XXX
+        message:
+          type: string
+          default: "Message description"
+
+    BaseNotificationIssuerContract:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        surname:
+          type: string
+
+    BaseNotificationFileContract:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+
+    BaseNotificationContract:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          $ref: '#/components/schemas/NotificationType'
+        timestampt:
+          type: string
+          format: date-time
+        issuer:
+          $ref: '#/components/schemas/BaseNotificationIssuerContract'
+        file:
+          $ref: '#/components/schemas/BaseNotificationFileContract'
+          nullable: true
+
+    BaseObjectContract:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        version:
+          type: string
+          format: uuid
+        name:
+          type: string
+        size:
+          type: integer
+          format: int64
+        favorite:
+          type: boolean
+        access:
+          type: integer
+          format: int64
+        user:
+          $ref: '#/components/schemas/BaseUserContract'
+        access_type:
+          $ref: '#/components/schemas/ObjectAccessType'
+        type:
+          $ref: '#/components/schemas/ObjectType'
+        updated_at:
+          type: string
+          format: date-time
+        created_at:
+          type: string
+          format: date-time
+
+    BaseResponseContractError:
+      type: object
+      properties:
+        success:
+          type: boolean
+        track_data:
+          $ref: '#/components/schemas/BaseTrackDataContract'
+        error:
+          $ref: '#/components/schemas/BaseErrorContract'
+
+    BaseShareContract:
+      type: object
+      properties:
+        id:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+        expires_at:
+          type: string
+          format: date-time
+          nullable: true
+        security:
+          type: array
+          items:
+            $ref: '#/components/schemas/ShareSecurity'
+
+    BaseTOTPContract:
+      type: object
+      properties:
+        key:
+          type: string
+        url:
+          type: string
+
+    BaseTrackDataContract:
+      type: object
+      properties:
+        request_id:
+          type: string
+          format: uuid
+        issuer_id:
+          type: string
+          format: uuid
+
+    BaseUserAdminContract:
+      type: object
+      properties:
+        created_at:
+          type: string
+          format: date-time
+        last_login:
+          type: string
+          format: date-time
+      allOf:
+        - $ref: '#/components/schemas/BaseUserContract'
+
+    BaseUserContract:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        name:
+          type: string
+        surname:
+          type: string
+        role:
+          type: string
+
+    BaseVersionContract:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+        size:
+          type: integer
+          format: int64
+        created_at:
+          type: string
+          format: date-time
+        user:
+          $ref: '#/components/schemas/BaseUserContract'
+
+    DeleteNotificationsResponseContract:
+      type: object
+      properties:
+        amount:
+          type: integer
+          format: int64
+
+    DeleteSpecifiedDiscussionResponseContract:
+      type: object
+      properties:
+        objects:
+          type: array
+          items:
+            type: string
+            format: uuid
+
+    DeleteSpecifiedShareResponseContract:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+
+paths:
+  /api/v1/notifications:
+    delete:
+      summary: Delete Notifications
+      description: Deletes notifications for a user.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful deletion of notifications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteNotificationsResponseContract'
+                example:
+                  amount: 10
+        '401':
+          description: Unauthorized - No valid authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponseContractError'
+        '403':
+          description: Forbidden - Insufficient permissions to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponseContractError'
+
+  /api/v1/discussion/{uuid}:
+    delete:
+      summary: Delete Specified Discussion
+      description: Deletes specified discussion threads in the system.
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          description: The unique identifier of the discussion thread to delete
+          schema:
+            type: string
+            format: uuid
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful deletion of discussion threads
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteSpecifiedDiscussionResponseContract'
+              example:
+                objects:
+                  - "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                  - "3fa85f64-5717-4562-b3fc-2c963f66afa7"
+        '401':
+          description: Unauthorized - No valid authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponseContractError'
+        '403':
+          description: Forbidden - Insufficient permissions to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponseContractError'
+        '404':
+          description: Not Found - Specified discussion thread not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponseContractError'
+
+  /api/v1/share/{uuid}:
+    delete:
+      summary: Delete Specified Share
+      description: Deletes a specified share in the system.
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          description: The unique identifier of the share to delete
+          schema:
+            type: string
+            format: uuid
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Successful deletion of the share
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeleteSpecifiedShareResponseContract'
+              example:
+                id: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+        '401':
+          description: Unauthorized - No valid authentication credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponseContractError'
+        '403':
+          description: Forbidden - Insufficient permissions to perform this action
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponseContractError'
+        '404':
+          description: Not Found - Specified share not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BaseResponseContractError'

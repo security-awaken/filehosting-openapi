@@ -1,0 +1,9 @@
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui:v5.17.14
+    environment:
+      SWAGGER_JSON: /oas/openapi-v1.yaml
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - ./:/oas
