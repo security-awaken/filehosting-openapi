@@ -1,0 +1,5063 @@
+openapi: 3.0.0
+
+info:
+  title: Cloudyy API
+  version: 1.0.0
+  description: An API specification for Cloudyy project
+
+servers:
+  - url: https://api.cloudyy.ru
+    description: Production server
+  - url: https://staging.api.cloudyy.ru
+    description: Staging server
+  - url: https://local.api.cloudyy.ru
+    description: Local development server
+
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              example: "XXX"
+            message:
+              type: string
+              example: "Error Message"
+        track_data:
+          type: object
+          properties:
+            request_id:
+              type: string
+              format: uuid
+            issuer_id:
+              type: string
+              format: uuid
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+paths:
+  /api/v1/user:
+    get:
+      summary: Get user profile
+      description: Retrieve the authenticated user's profile information including email, name, surname, and role
+      tags:
+        - user
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      email:
+                        type: string
+                        format: email
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      role:
+                        type: string
+        '401':
+          description: Unauthorized - Authentication credentials are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - User does not have permission to access this resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    post:
+      summary: Create new user
+      description: Register a new user account with email, name, surname, and role
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: john
+                surname:
+                  type: string
+                  example: doe
+      responses:
+        '200':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      email:
+                        type: string
+                        format: email
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      role:
+                        type: string
+        '400':
+          description: Bad Request - Invalid input data or missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Authentication credentials are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - User does not have permission to create users
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - User with provided email already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    patch:
+      summary: Update user profile
+      description: Update the authenticated user's profile information
+      tags:
+        - user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: john
+                surname:
+                  type: string
+                  example: doe
+      responses:
+        '200':
+          description: User profile updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      email:
+                        type: string
+                        format: email
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      role:
+                        type: string
+        '400':
+          description: Bad Request - Invalid input data or validation errors
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Authentication credentials are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - User does not have permission to update this profile
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/user/{user_id}:
+    parameters:
+      - name: user_id
+        in: path
+        required: true
+        description: Unique identifier of the user
+        schema:
+          type: string
+          format: uuid
+    get:
+      summary: Get user by ID
+      description: Retrieve detailed user information for a specific user by their unique identifier
+      tags:
+        - user
+      responses:
+        '200':
+          description: User details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      email:
+                        type: string
+                        format: email
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      role:
+                        type: string
+        '401':
+          description: Unauthorized - Authentication credentials are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - User does not have permission to access this user's information
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found - User with the specified ID does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/invite:
+    post:
+      summary: Create invitation
+      description: Generate and send an invitation to a new user with a specified validity period
+      tags:
+        - invite
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                invite_code:
+                  type: string
+                  description: Invite code
+      responses:
+        '200':
+          description: Invitation created and sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      email:
+                        type: string
+                        format: email
+                      valid_until:
+                        type: string
+                        format: date-time
+        '400':
+          description: Bad Request - Invalid email format, missing required fields, or invalid role/valid_days values
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Authentication credentials are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - User does not have permission to create invitations
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - An invitation for this email already exists or is pending
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/2fa:
+    get:
+      summary: Get 2FA configuration status
+      description: Retrieve the current Two-Factor Authentication configuration status for the authenticated user
+      tags:
+        - auth
+      responses:
+        '200':
+          description: 2FA configuration retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      type:
+                        type: string
+                        description: Current 2FA method configured for the user
+                        enum: [totp, email, none]
+                        example: email
+        '401':
+          description: Unauthorized - Authentication credentials are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - User does not have permission to access 2FA configuration
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/2fa/request:
+    get:
+      summary: Request 2FA verification
+      description: Initiate a Two-Factor Authentication verification request for the authenticated user
+      tags:
+        - auth
+      responses:
+        '200':
+          description: 2FA verification request initiated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      action:
+                        type: string
+                        description: The action requiring 2FA verification
+                        enum: [login, sensitive_operation, password_change]
+                        example: sensitive_operation
+                      type:
+                        type: string
+                        description: 2FA method being used for verification
+                        enum: [totp, email]
+                        example: email
+                      id:
+                        type: string
+                        format: uuid
+                        description: Unique identifier for this verification request
+        '400':
+          description: Bad Request - Invalid request or unsupported 2FA method
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Authentication credentials are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - User does not have permission to request 2FA verification
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - 2FA verification is already in progress or not required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/2fa/verify:
+    post:
+      summary: Verify 2FA code
+      description: Submit a Two-Factor Authentication verification code to complete the authentication process
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - verification_id
+                - code
+              properties:
+                verification_id:
+                  type: string
+                  format: uuid
+                  description: ID of the verification request from /api/v1/auth/2fa/request
+                code:
+                  type: string
+                  description: The 2FA verification code received by the user
+                  minLength: 6
+                  maxLength: 8
+                remember_device:
+                  type: boolean
+                  description: Whether to remember this device for future 2FA bypass
+                  default: false
+      responses:
+        '200':
+          description: 2FA verification successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      2fa_access_key:
+                        type: string
+                        description: Temporary access key granted after successful 2FA verification
+                        minLength: 64
+                        maxLength: 256
+        '400':
+          description: Bad Request - Invalid verification code, expired request, or missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Initial authentication credentials are missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Too many failed attempts or verification request has been cancelled
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - Verification already completed or is no longer valid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '410':
+          description: Gone - Verification request has expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/signup/self:
+    post:
+      summary: Self registration
+      description: Register a new user account through self-service registration
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - name
+                - surname
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: User's email address
+                password:
+                  type: string
+                  description: Account password
+                  minLength: 8
+      responses:
+        '200':
+          description: Registration request processed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      confirmation_required:
+                        type: boolean
+                        description: Whether email confirmation is required before account activation
+                        example: true
+                      auth_data:
+                        type: object
+                        nullable: true
+                        description: Authentication data if immediate login is allowed, null if confirmation is required
+        '400':
+          description: Bad Request - Invalid input data, weak password, or missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - User with this email already exists or invite code is invalid/expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '423':
+          description: Locked - Registration is currently disabled or requires admin approval
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/signup/self/confirm:
+    post:
+      summary: Confirm self registration
+      description: Confirm email address and complete self-service registration using confirmation code
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confirmation_code:
+                  type: string
+                  example: "Eg3nS9zwu8rtrfYdZeyvRhejtiiRVq6anZ43tURUxCpTcA5ztmr6fVQi5f4TYtg0Sfie5yvbSpUYBMJbGd74m4RE87xyh65b"
+      responses:
+        '200':
+          description: Registration confirmed successfully, user authenticated
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                description: HTTP-only session cookie containing authentication token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        description: Bearer token for API authentication
+                      csrf_token:
+                        type: string
+                        description: CSRF token for form submissions
+        '400':
+          description: Bad Request - Invalid or expired confirmation code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Confirmation attempt requires valid session or credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Too many failed confirmation attempts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found - No pending registration found for this confirmation code
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '410':
+          description: Gone - Confirmation code has expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/signup/invite:
+    post:
+      summary: Register with invitation
+      description: Complete user registration using an invitation code and set account password
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                invite:
+                  type: string
+                  example: "yNIxRWpzhWxGUTPhoGwNUEWHThfObgRKeANPKOxUYCtfAbpyMOWbzCehjTZeiKBpEvHsemEsRmJPrybeJTKsvdaWATaLpTOm"
+                password:
+                  type: string
+                  example: "Pa$$w0rd123"
+      responses:
+        '200':
+          description: Registration completed successfully with invitation, user authenticated
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                description: HTTP-only session cookie containing authentication token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        description: Bearer token for API authentication
+                      csrf_token:
+                        type: string
+                        description: CSRF token for form submissions
+        '400':
+          description: Bad Request - Invalid invitation code, weak password, or missing required fields
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Registration attempt requires valid invitation or session
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Invitation has expired or been revoked
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found - Invitation code not found or already used
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - User with this email already exists or invitation already claimed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '410':
+          description: Gone - Invitation has expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/signin:
+    post:
+      summary: User authentication
+      description: Authenticate user with credentials and handle 2FA requirements
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: "dev@constructmg.ru"
+                password:
+                  type: string
+                  example: "Pa$$w0rd123"
+                twofactor_key:
+                  type: string
+                  description: Optional 2FA key when 2FA is required
+                  example: "G3f7n9P1q4R6s2T8w1V7y3Z0a5B6m8Q2e9H4vL3xW1F0jD5cR7U8sX6oY2T5kJ4nO9eV8mA1zB7hT2rQ5iN3dU6pA8xR4vF9yT3dL5a"
+      responses:
+        '200':
+          description: Authentication successful
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                description: HTTP-only session cookie containing authentication token
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    description: Response when 2FA is not required or 2FA key is provided
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                      track_data:
+                        type: object
+                        properties:
+                          request_id:
+                            type: string
+                            format: uuid
+                          issuer_id:
+                            type: string
+                            format: uuid
+                      payload:
+                        type: object
+                        properties:
+                          2fa_required:
+                            type: boolean
+                            example: false
+                          auth_data:
+                            type: object
+                            properties:
+                              access_token:
+                                type: string
+                                description: Bearer token for API authentication
+                              expires_in:
+                                type: integer
+                                description: Token expiration time in seconds
+                              csrf_token:
+                                type: string
+                                description: CSRF token for form submissions
+                              user:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    format: uuid
+                                  email:
+                                    type: string
+                                    format: email
+                                  name:
+                                    type: string
+                                  surname:
+                                    type: string
+                                  role:
+                                    type: string
+                  - type: object
+                    description: Response when 2FA is required and no 2FA key provided
+                    properties:
+                      success:
+                        type: boolean
+                        example: true
+                      track_data:
+                        type: object
+                        properties:
+                          request_id:
+                            type: string
+                            format: uuid
+                          issuer_id:
+                            type: string
+                            format: uuid
+                      payload:
+                        type: object
+                        properties:
+                          2fa_required:
+                            type: boolean
+                            example: true
+                          auth_data:
+                            type: object
+                            properties:
+                              access_token:
+                                type: string
+                                description: Temporary access token pending 2FA verification
+                              expires_in:
+                                type: integer
+                                description: Temporary token expiration time in seconds
+                              csrf_token:
+                                type: string
+                                description: CSRF token for form submissions
+        '400':
+          description: Bad Request - Invalid credentials, missing required fields, or invalid 2FA key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Invalid email or password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Account is locked, disabled, or requires admin approval
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too Many Requests - Too many failed login attempts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/refresh:
+    get:
+      summary: Refresh authentication tokens
+      description: Refresh the current user's access token using a valid refresh token or session
+      tags:
+        - auth
+      responses:
+        '200':
+          description: Tokens refreshed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        description: New bearer token for API authentication
+                      expires_in:
+                        type: integer
+                        description: Token expiration time in seconds
+                      csrf_token:
+                        type: string
+                        description: New CSRF token for form submissions
+        '400':
+          description: Bad Request - Invalid or malformed refresh request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Refresh token is missing, invalid, or expired
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Refresh attempt is not allowed (e.g., token revoked, suspicious activity)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/logout:
+    get:
+      summary: User logout
+      description: Terminate the current user session and invalidate authentication tokens
+      tags:
+        - auth
+      responses:
+        '200':
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    description: Empty payload on successful logout
+        '400':
+          description: Bad Request - Invalid logout request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - No active session to logout from
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - Logout not permitted (e.g., admin session)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/auth/password:
+    patch:
+      summary: Change password
+      description: Update user password with optional 2FA verification
+      tags:
+        - auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_password:
+                  type: string
+                  example: "hehexdO1dPa$$w0Rd*"
+                new_password:
+                  type: string
+                  example: "N3wPa$$w0Rd*"
+                twofactor_key:
+                  type: string
+                  description: Optional 2FA verification key when 2FA is enabled
+                  example: "G3f7n9P1q4R6s2T8w1V7y3Z0a5B6m8Q2e9H4vL3xW1F0jD5cR7U8sX6oY2T5kJ4nO9eV8mA1zB7hT2rQ5iN3dU6pA8xR4vF9yT3dL5a"
+      responses:
+        '200':
+          description: Password changed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    description: Empty payload on successful password change
+        '400':
+          description: Bad Request - Invalid passwords, missing fields, weak new password, or invalid 2FA key
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Invalid old password or authentication required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - 2FA verification required or password change not allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict - New password cannot be the same as old password
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Too Many Requests - Too many failed password change attempts
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        default:
+          description: Unexpected server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/notifications:
+    get:
+      summary: Get user notifications
+      description: Retrieve all notifications for the authenticated user, including read and unread
+      tags:
+        - notifications
+      parameters:
+        - name: limit
+          in: query
+          description: Maximum number of notifications to return
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+        - name: offset
+          in: query
+          description: Number of notifications to skip for pagination
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: Notifications retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      unread_count:
+                        type: integer
+                        description: Number of unread notifications
+                      total_count:
+                        type: integer
+                        description: Total number of notifications
+                      unread:
+                        type: array
+                        description: List of unread notifications
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              description: Type of notification
+                            id:
+                              type: string
+                              format: uuid
+                              description: Unique notification ID
+                            timestamp:
+                              type: string
+                              format: date-time
+                              description: When the notification was created
+                            role:
+                              type: string
+                              description: User role associated with the notification
+                            issuer:
+                              type: object
+                              description: User who triggered the notification
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                email:
+                                  type: string
+                                  format: email
+                                role:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+                      read:
+                        type: array
+                        description: List of read notifications
+                        items:
+                          type: object
+                          properties:
+                            type:
+                              type: string
+                              description: Type of notification
+                            id:
+                              type: string
+                              format: uuid
+                              description: Unique notification ID
+                            timestamp:
+                              type: string
+                              format: date-time
+                              description: When the notification was created
+                            issuer:
+                              type: object
+                              description: User who triggered the notification
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                email:
+                                  type: string
+                                  format: email
+                                role:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+                            file:
+                              type: object
+                              description: Optional file associated with the notification
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                name:
+                                  type: string
+                                  description: File name
+        '400':
+          description: Bad Request - Invalid query parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Authentication credentials are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - User does not have permission to view notifications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Clear notifications
+      description: Delete all or specific notifications for the authenticated user
+      tags:
+        - notifications
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notification_ids:
+                  type: array
+                  description: Specific notification IDs to delete (empty to delete all)
+                  items:
+                    type: string
+                    format: uuid
+                delete_all:
+                  type: boolean
+                  description: Whether to delete all notifications
+                  default: false
+      responses:
+        '200':
+          description: Notifications deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      amount:
+                        type: integer
+                        description: Number of notifications deleted
+        '400':
+          description: Bad Request - Invalid notification IDs or conflicting parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Authentication credentials are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden - User does not have permission to delete notifications
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/storage/used:
+    get:
+      summary: Get storage usage
+      description: Retrieve current storage usage statistics for the authenticated user
+      tags:
+        - storage
+      responses:
+        '200':
+          description: Storage usage retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      used_storage:
+                        type: integer
+                        description: Amount of storage currently used in bytes
+                      total_storage:
+                        type: integer
+                        description: Total storage allocation in bytes
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/directory/{directory}:
+    get:
+      summary: Get directory contents
+      description: List all files and folders in the directory
+      tags:
+        - directory
+      responses:
+        '200':
+          description: Directory contents retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        description: Total number of items in directory
+                      count:
+                        type: integer
+                        description: Number of items in current response
+                      objects:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            version:
+                              type: string
+                              description: File version identifier
+                            name:
+                              type: string
+                              description: Name of file or folder
+                            size:
+                              type: integer
+                              description: Size in bytes (0 for folders)
+                            favorite:
+                              type: boolean
+                              description: Whether item is marked as favorite
+                            access_type:
+                              type: string
+                              description: Type of access control
+                            access:
+                              type: integer
+                              description: Access permission level
+                            type:
+                              type: string
+                              description: Type of item (file/folder)
+                            user:
+                              type: object
+                              description: Owner of the item
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                email:
+                                  type: string
+                                  format: email
+                                role:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+                            updated_at:
+                              type: string
+                              format: date-time
+                              description: Last modification timestamp
+                            created_at:
+                              type: string
+                              format: date-time
+                              description: Creation timestamp
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+        - name: directory
+          in: path
+          required: true
+          schema:
+            type: string
+
+  /api/v1/directory/create:
+    post:
+      summary: Create directory
+      description: Create a new directory/folder in the specified destination
+      tags:
+        - directory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Новая Папка"
+                destination:
+                  type: string
+                  format: uuid
+                  description: ID of parent directory where to create the new folder
+                validity_end:
+                  type: string
+                  format: date
+                  description: Optional expiration date for the folder (ISO 8601 format)
+                  nullable: true
+      responses:
+        '200':
+          description: Directory created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      version:
+                        type: string
+                      name:
+                        type: string
+                      size:
+                        type: integer
+                      favorite:
+                        type: boolean
+                      access_type:
+                        type: string
+                      access:
+                        type: integer
+                      type:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                          email:
+                            type: string
+                            format: email
+                          role:
+                            type: string
+                          name:
+                            type: string
+                          surname:
+                            type: string
+                      updated_at:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/trash/{directory}:
+    parameters:
+      - name: directory
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Directory ID or 'root' for root trash directory
+    get:
+      summary: Get trash directory contents
+      description: List all files and folders in the specified trash directory
+      tags:
+        - trash
+      responses:
+        '200':
+          description: Trash directory contents retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                      count:
+                        type: integer
+                      objects:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            version:
+                              type: string
+                            name:
+                              type: string
+                            size:
+                              type: integer
+                            favorite:
+                              type: boolean
+                            access_type:
+                              type: string
+                            access:
+                              type: integer
+                            type:
+                              type: string
+                            user:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                email:
+                                  type: string
+                                  format: email
+                                role:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+                            updated_at:
+                              type: string
+                              format: date-time
+                            created_at:
+                              type: string
+                              format: date-time
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      summary: Restore from trash or update trash item
+      description: Restore an item from trash to its original location or update its properties
+      tags:
+        - trash
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Новая Папка"
+                validity_end:
+                  type: string
+                  format: date
+                  description: Optional expiration date for the restored item (ISO 8601 format)
+                  nullable: true
+      responses:
+        '200':
+          description: Item restored or updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      version:
+                        type: string
+                      name:
+                        type: string
+                      size:
+                        type: integer
+                      favorite:
+                        type: boolean
+                      access_type:
+                        type: string
+                      access:
+                        type: integer
+                      type:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                          email:
+                            type: string
+                            format: email
+                          role:
+                            type: string
+                          name:
+                            type: string
+                          surname:
+                            type: string
+                      updated_at:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/{id}:
+    get:
+      summary: Get object details
+      description: Retrieve detailed information about a specific file or directory object
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the object
+      tags:
+        - object
+      responses:
+        '200':
+          description: Object details retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      version:
+                        type: string
+                      name:
+                        type: string
+                      size:
+                        type: integer
+                      favorite:
+                        type: boolean
+                      access_type:
+                        type: string
+                      access:
+                        type: integer
+                      type:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                          email:
+                            type: string
+                            format: email
+                          role:
+                            type: string
+                          name:
+                            type: string
+                          surname:
+                            type: string
+                      updated_at:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/{id}/preview:
+    get:
+      summary: Get object preview
+      description: Retrieve a preview of a file or image object
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the object
+      tags:
+        - object
+      responses:
+        '200':
+          description: Preview retrieved successfully
+          headers:
+            Content-Length:
+              schema:
+                type: integer
+                description: Size of the preview in bytes
+            Cache-Control:
+              schema:
+                type: string
+                description: Cache control directives for the preview
+            Content-Type:
+              schema:
+                type: string
+                description: MIME type of the preview (e.g., image/jpeg, image/png, application/pdf)
+          content:
+            image/*:
+              schema:
+                type: string
+                format: binary
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/{id}/shares:
+    get:
+      summary: Get object shares
+      description: Retrieve sharing information and permissions for a specific object
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the object
+      tags:
+        - object
+      responses:
+        '200':
+          description: Object shares retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        description: Total number of shares for this object
+                      shares:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              description: Unique share identifier
+                            created_at:
+                              type: string
+                              format: date-time
+                              description: When the share was created
+                            expires_at:
+                              type: string
+                              format: date-time
+                              description: When the share expires (null if no expiration)
+                              nullable: true
+                            security:
+                              type: array
+                              items:
+                                type: string
+                                enum: [download, upload, show, password, lifetime]
+                              description: Security permissions applied to this share
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/{id}/access:
+    get:
+      summary: Get object access permissions
+      description: Retrieve access control list and permissions for a specific object
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the object
+      tags:
+        - object
+      responses:
+        '200':
+          description: Object access permissions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        description: Total number of users with access to this object
+                      access:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: Access permission identifier
+                            type:
+                              type: string
+                              enum: [owner, editor, viewer]
+                              description: Type of access permission
+                            user:
+                              type: object
+                              description: User with access to the object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                email:
+                                  type: string
+                                  format: email
+                                role:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/{id}/versions:
+    get:
+      summary: Get object versions
+      description: Retrieve version history of a specific object
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the object
+      tags:
+        - object
+      responses:
+        '200':
+          description: Object versions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      title:
+                        type: string
+                        description: Name of the object
+                      versions:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: Version identifier
+                            size:
+                              type: integer
+                              description: Size of this version in bytes
+                            created_at:
+                              type: string
+                              format: date-time
+                              description: When this version was created
+                            user:
+                              type: object
+                              description: User who created this version
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                email:
+                                  type: string
+                                  format: email
+                                role:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+
+  /api/v1/object/{id}/discussion:
+    get:
+      summary: Get object discussion
+      description: Retrieve discussion/comments associated with a specific object
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the object
+      tags:
+        - object
+      responses:
+        '200':
+          description: Object discussion retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        description: Total number of discussion responses
+                      responses:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                              description: Response identifier
+                            responses:
+                              type: integer
+                              description: Number of replies to this response
+                            updated_at:
+                              type: string
+                              format: date-time
+                              description: Last update timestamp
+                            created_at:
+                              type: string
+                              format: date-time
+                              description: Creation timestamp
+                            message:
+                              type: string
+                              description: Comment/message content
+                            user:
+                              type: object
+                              description: User who created the response
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                email:
+                                  type: string
+                                  format: email
+                                role:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/{id}/discussion/reply:
+    post:
+      summary: Reply to object discussion
+      description: Add a new reply/comment to the discussion of a specific object
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the object
+      tags:
+        - object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The comment text
+                  example: "some comment about file"
+                respond_to:
+                  type: string
+                  description: ID of parent comment to reply to, or "root" to create new thread
+                  example: "6debf6a1-3a79-4002-adeb-272c7c2140d4"
+                  nullable: true
+      responses:
+        '200':
+          description: Reply added successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      responses:
+                        type: integer
+                      updated_at:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+                      message:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                          email:
+                            type: string
+                            format: email
+                          role:
+                            type: string
+                          name:
+                            type: string
+                          surname:
+                            type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/{id}/share:
+    post:
+      summary: Create object share
+      description: Create a shareable link with specific permissions for an object
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the object
+      tags:
+        - object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                allow_downloads:
+                  type: boolean
+                  description: Whether downloads are allowed
+                  example: true
+                allow_uploads:
+                  type: boolean
+                  description: Whether uploads are allowed
+                  example: true
+                show_files:
+                  type: boolean
+                  description: Whether files are visible
+                  example: true
+                password_enabled:
+                  type: boolean
+                  description: Whether password protection is enabled
+                  example: true
+                password:
+                  type: string
+                  description: Password for the share (required if password_enabled is true)
+                  example: "Pa$$w0rd*"
+                validity_time:
+                  type: string
+                  format: date-time
+                  description: Expiration date and time for the share
+                  example: "2023-04-01T12:00:00Z"
+      responses:
+        '200':
+          description: Share created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/download:
+    post:
+      summary: Download objects
+      description: Download multiple objects as a zip archive
+      tags:
+        - object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                objects:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: List of object IDs to download
+                  example: ["7e8f9a3a-5944-437f-9ce1-1d3ab3af6d18", "93113676-1062-4b14-8a46-41bc06bcdc7e", "4bfb511c-57be-428c-8bdc-4b74170098bd"]
+      responses:
+        '200':
+          description: Download ready
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+                description: File attachment header with filename
+            Content-Length:
+              schema:
+                type: integer
+                description: Size of the download in bytes
+            Cache-Control:
+              schema:
+                type: string
+                description: Cache control directives
+            Content-Type:
+              schema:
+                type: string
+                description: MIME type (e.g., application/zip)
+          content:
+            application/zip:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/favorite:
+    post:
+      summary: Toggle favorite objects
+      description: Add objects to favorites
+      tags:
+        - object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                objects:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: List of object IDs to favorite
+                  example: ["01c1d37e-197e-472e-a6e9-806c96f1708e", "93113676-1062-4b14-8a46-41bc06bcdc7e"]
+      responses:
+        '200':
+          description: Favorite status updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        description: Total number of favorite objects
+                      objects:
+                        type: array
+                        items:
+                          type: string
+                          format: uuid
+                          description: List of currently favorited object IDs
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/unfavorite:
+    post:
+      summary: Toggle unfavorite objects
+      description: Remove objects from favorites list
+      tags:
+        - object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                objects:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: List of object IDs to unfavorite
+                  example: ["01c1d37e-197e-472e-a6e9-806c96f1708e", "93113676-1062-4b14-8a46-41bc06bcdc7e"]
+      responses:
+        '200':
+          description: Favorite status updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        description: Total number of favorite objects
+                      objects:
+                        type: array
+                        items:
+                          type: string
+                          format: uuid
+                          description: List of currently favorited object IDs
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/trash:
+    post:
+      summary: Trash objects
+      description: Put objects in trash bin
+      tags:
+        - object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                objects:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: List of object IDs to trash
+                  example: ["01c1d37e-197e-472e-a6e9-806c96f1708e", "93113676-1062-4b14-8a46-41bc06bcdc7e"]
+      responses:
+        '200':
+          description: Successfully trashed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        description: Total number of trashed objects
+                      objects:
+                        type: array
+                        items:
+                          type: string
+                          format: uuid
+                          description: List of currently trashed object IDs
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/delete:
+    post:
+      summary: Delete objects
+      description: Delete objects
+      tags:
+        - object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                objects:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: List of object IDs to delete
+                  example: ["01c1d37e-197e-472e-a6e9-806c96f1708e", "93113676-1062-4b14-8a46-41bc06bcdc7e"]
+      responses:
+        '200':
+          description: Successfully deleted
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        description: Total number of deleted objects
+                      objects:
+                        type: array
+                        items:
+                          type: string
+                          format: uuid
+                          description: List of currently deleted object IDs
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/restore:
+    post:
+      summary: Restore objects
+      description: Restore objects
+      tags:
+        - object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                objects:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: List of object IDs to restore
+                  example: ["01c1d37e-197e-472e-a6e9-806c96f1708e", "93113676-1062-4b14-8a46-41bc06bcdc7e"]
+      responses:
+        '200':
+          description: Successfully restore
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        description: Total number of restored objects
+                      objects:
+                        type: array
+                        items:
+                          type: string
+                          format: uuid
+                          description: List of currently restored object IDs
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/copy:
+    post:
+      summary: Copy objects
+      description: Copy objects
+      tags:
+        - object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destination:
+                  type: string
+                objects:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: List of object IDs to copy
+                  example: ["01c1d37e-197e-472e-a6e9-806c96f1708e", "93113676-1062-4b14-8a46-41bc06bcdc7e"]
+      responses:
+        '200':
+          description: Successfully copy
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        description: Total number of favorite objects
+                      destination:
+                        type: string
+                      objects:
+                        type: array
+                        items:
+                          type: string
+                          format: uuid
+                          description: List of currently favorited object IDs
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '507':
+          description: Insufficient Storage
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/move:
+    post:
+      summary: Move objects
+      description: Move objects
+      tags:
+        - object
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                destination:
+                  type: string
+                objects:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+                  description: List of object IDs to move
+                  example: ["01c1d37e-197e-472e-a6e9-806c96f1708e", "93113676-1062-4b14-8a46-41bc06bcdc7e"]
+      responses:
+        '200':
+          description: Successfully moved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        description: Total number of moved objects
+                      destination:
+                        type: string
+                      objects:
+                        type: array
+                        items:
+                          type: string
+                          format: uuid
+                          description: List of currently moved object IDs
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '507':
+          description: Insufficient Storage
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/object/upload:
+    post:
+      summary: Upload objects
+      description: Upload one or more files to a specified destination directory
+      tags:
+        - object
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: Files to upload
+                destination:
+                  type: string
+                  format: uuid
+                  description: Destination directory ID where files should be uploaded
+      responses:
+        '200':
+          description: Files uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      count:
+                        type: integer
+                        description: Number of files uploaded
+                      destination:
+                        type: string
+                        format: uuid
+                        description: Destination directory ID
+                      objects:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            name:
+                              type: string
+                            type:
+                              type: string
+                            size:
+                              type: integer
+                            updated_at:
+                              type: string
+                              format: date-time
+                            created_at:
+                              type: string
+                              format: date-time
+                            access_type:
+                              type: string
+                            favorite:
+                              type: boolean
+                            user:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                email:
+                                  type: string
+                                  format: email
+                                role:
+                                  type: string
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '507':
+          description: Insufficient Storage
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/version/{id}:
+    delete:
+      summary: Delete version
+      description: Delete a specific version of an object
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the version
+      tags:
+        - version
+      responses:
+        '200':
+          description: Version deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: ID of the deleted version
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/version/{id}/restore:
+    get:
+      summary: Restore version
+      description: Make a version as an object current version
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the version
+      tags:
+        - version
+      responses:
+        '200':
+          description: Version restored successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                        description: ID of the restored version
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/share/{id}:
+    delete:
+      summary: Delete share
+      description: Delete a shareable link
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the share
+      tags:
+        - share
+      responses:
+        '200':
+          description: Share deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: ID of the deleted share
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    patch:
+      summary: Update share
+      description: Update permissions and settings of an existing share
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the share
+      tags:
+        - share
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                allow_downloads:
+                  type: boolean
+                  description: Whether downloads are allowed
+                  example: true
+                allow_uploads:
+                  type: boolean
+                  description: Whether uploads are allowed
+                  example: true
+                show_files:
+                  type: boolean
+                  description: Whether files are visible
+                  example: true
+                password_enabled:
+                  type: boolean
+                  description: Whether password protection is enabled
+                  example: true
+                password:
+                  type: string
+                  description: Password for the share (required if password_enabled is true)
+                  example: "Pa$$w0rd*"
+                validity_time:
+                  type: string
+                  format: date-time
+                  description: Expiration date and time for the share
+                  example: "2023-04-01T12:00:00Z"
+      responses:
+        '200':
+          description: Share updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        description: Share identifier
+                      created_at:
+                        type: string
+                        format: date-time
+                        description: When the share was created
+                      expires_at:
+                        type: string
+                        format: date-time
+                        description: When the share expires (null if no expiration)
+                        nullable: true
+                      security:
+                        type: array
+                        items:
+                          type: string
+                          enum: [download, upload, show, password, lifetime]
+                        description: Security permissions applied to this share
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/discussion/{id}:
+    get:
+      summary: Get discussion comment
+      description: Retrieve a specific discussion comment by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the discussion comment
+      tags:
+        - discussion
+      responses:
+        '200':
+          description: Discussion comment retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      responses:
+                        type: integer
+                      updated_at:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+                      message:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                          email:
+                            type: string
+                            format: email
+                          role:
+                            type: string
+                          name:
+                            type: string
+                          surname:
+                            type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    patch:
+      summary: Update discussion comment
+      description: Update the message of a discussion comment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the discussion comment
+      tags:
+        - discussion
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: Updated message content
+                  example: "худшая работа в мире что я видел переделывай"
+      responses:
+        '200':
+          description: Discussion comment updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      responses:
+                        type: integer
+                      updated_at:
+                        type: string
+                        format: date-time
+                      created_at:
+                        type: string
+                        format: date-time
+                      message:
+                        type: string
+                      user:
+                        type: object
+                        properties:
+                          id:
+                            type: string
+                            format: uuid
+                          email:
+                            type: string
+                            format: email
+                          role:
+                            type: string
+                          name:
+                            type: string
+                          surname:
+                            type: string
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+    delete:
+      summary: Delete discussion comment
+      description: Delete a discussion comment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the discussion comment
+      tags:
+        - discussion
+      responses:
+        '200':
+          description: Discussion comment deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/audit:
+    get:
+      summary: Get audit logs
+      description: Retrieve system audit logs with user actions and events
+      tags:
+        - audit
+      responses:
+        '200':
+          description: Audit logs retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        description: Total number of audit records
+                      audit:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            trace_id:
+                              type: string
+                              format: uuid
+                              description: Unique trace identifier
+                            type:
+                              type: string
+                              description: Type of audit event
+                              enum: [err, info, warn, debug]
+                            timestamp:
+                              type: string
+                              format: date-time
+                              description: When the event occurred
+                            user:
+                              type: object
+                              description: User who performed the action
+                              properties:
+                                id:
+                                  type: string
+                                  format: uuid
+                                email:
+                                  type: string
+                                  format: email
+                                name:
+                                  type: string
+                                surname:
+                                  type: string
+                            action:
+                              type: string
+                              description: Description of the action performed
+                            details:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  name:
+                                    type: string
+                                  value:
+                                    type: string
+                              description: Additional details about the audit event
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/audit/export:
+    get:
+      summary: Export audit logs
+      description: Export system audit logs as a CSV file
+      tags:
+        - audit
+      responses:
+        '200':
+          description: Audit logs exported successfully
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+                description: File attachment header with filename
+            Content-Length:
+              schema:
+                type: integer
+                description: Size of the CSV file in bytes
+            Content-Type:
+              schema:
+                type: string
+                description: MIME type (text/csv)
+          content:
+            text/csv:
+              schema:
+                type: string
+                format: binary
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/auth/signup:
+    post:
+      summary: Admin registration
+      description: Register a new admin account using an access key
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_key:
+                  type: string
+                  description: Admin access key for registration
+                  example: "nc02vrXZR7jMGKAYcb00icolbbbzBLllQvEo5YJsV12IFr5QPzIwzP6iwHrn5ntQ"
+                email:
+                  type: string
+                  format: email
+                  description: Admin email address
+                  example: "dev@constructmg.ru"
+                password:
+                  type: string
+                  description: Admin account password
+                  example: "Pa$$w0rd123"
+      responses:
+        '200':
+          description: Admin registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        description: Bearer token for API authentication
+                      expires_in:
+                        type: integer
+                        description: Token expiration time in seconds
+                      csrf_token:
+                        type: string
+                        description: CSRF token for form submissions
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/storage/info:
+    get:
+      summary: Get storage information
+      description: Retrieve system-wide storage statistics and configuration
+      tags:
+        - admin
+      responses:
+        '200':
+          description: Storage information retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      space_used:
+                        type: integer
+                        description: Total storage space used in bytes
+                      space_quota:
+                        type: integer
+                        description: Total storage quota in bytes
+                      total_files:
+                        type: integer
+                        description: Total number of files in the system
+                      storage_time:
+                        type: integer
+                        description: File retention period in days
+                      trashbin_optimization:
+                        type: boolean
+                        description: Whether trashbin optimization is enabled
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/auth/confirm:
+    post:
+      summary: Admin authentication confirmation
+      description: Confirm admin authentication using an access key
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_key:
+                  type: string
+                  description: Admin access key for authentication confirmation
+                  example: "nc02vrXZR7jMGKAYcb00icolbbbzBLllQvEo5YJsV12IFr5QPzIwzP6iwHrn5ntQ"
+      responses:
+        '200':
+          description: Admin authentication confirmed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/signup:
+    post:
+      summary: Admin registration
+      description: Register a new admin account using an access key
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                access_key:
+                  type: string
+                  description: Admin access key for registration
+                  example: "nc02vrXZRR7jMGKAYcb00icolbbbzBLllQvEo5YJsV12IFr5QPzIwzP6iwHrn5ntQ"
+                email:
+                  type: string
+                  format: email
+                  description: Admin email address
+                  example: "dev@constructmg.ru"
+                password:
+                  type: string
+                  description: Admin account password
+                  example: "Pa$$w0rd123"
+      responses:
+        '200':
+          description: Admin registered successfully
+          headers:
+            Set-Cookie:
+              schema:
+                type: string
+                description: HTTP-only session cookie containing authentication token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        description: Bearer token for API authentication
+                      expires_in:
+                        type: integer
+                        description: Token expiration time in seconds
+                      csrf_token:
+                        type: string
+                        description: CSRF token for form submissions
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+
+
+  /api/v1/admin/security/password:
+    patch:
+      summary: Update password security policy
+      description: Configure system-wide password security requirements
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                length:
+                  type: integer
+                  description: Minimum password length
+                  example: 8
+                capitalisation:
+                  type: boolean
+                  description: Whether passwords require capital letters
+                  example: true
+                numerics:
+                  type: boolean
+                  description: Whether passwords require numbers
+                  example: true
+                special:
+                  type: boolean
+                  description: Whether passwords require special characters
+                  example: true
+      responses:
+        '200':
+          description: Password security policy updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      length:
+                        type: integer
+                      capitalisation:
+                        type: boolean
+                      numerics:
+                        type: boolean
+                      special:
+                        type: boolean
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/storage/time:
+    patch:
+      summary: Update storage retention time
+      description: Update system-wide file retention period
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                storage_time:
+                  type: integer
+                  description: New file retention period in days
+                  example: 365
+      responses:
+        '200':
+          description: Storage retention time updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      storage_time:
+                        type: integer
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/storage/quota:
+    patch:
+      summary: Update storage quota
+      description: Update system-wide storage quota limit
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                space_quota:
+                  type: integer
+                  description: New storage quota in bytes
+                  example: 12123
+      responses:
+        '200':
+          description: Storage quota updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      space_quota:
+                        type: integer
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/user/invite:
+    post:
+      summary: Create user invitation
+      description: Generate an invitation code for a new user
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                  description: Email address to send the invitation to
+                  example: "dev@constructmg.ru"
+      responses:
+        '200':
+          description: Invitation created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      invite_code:
+                        type: string
+                        description: Generated invitation code
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/user/stats:
+    get:
+      summary: Get user statistics
+      description: Retrieve system-wide user statistics by role
+      tags:
+        - admin
+      responses:
+        '200':
+          description: User statistics retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      regular:
+                        type: integer
+                        description: Number of regular users
+                      auditors:
+                        type: integer
+                        description: Number of auditor users
+                      admins:
+                        type: integer
+                        description: Number of admin users
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/user/list:
+    get:
+      summary: List users
+      description: Retrieve a list of all system users with their details
+      tags:
+        - admin
+      responses:
+        '200':
+          description: User list retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      total:
+                        type: integer
+                        description: Total number of users
+                      users:
+                        type: array
+                        items:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              format: uuid
+                            email:
+                              type: string
+                              format: email
+                            role:
+                              type: string
+                            name:
+                              type: string
+                            surname:
+                              type: string
+                            created_at:
+                              type: string
+                              format: date-time
+                            last_login:
+                              type: string
+                              format: date-time
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/user/{id}/info:
+    get:
+      summary: Get user information
+      description: Retrieve detailed information about a specific user
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the user
+      tags:
+        - admin
+      responses:
+        '200':
+          description: User information retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      email:
+                        type: string
+                        format: email
+                      role:
+                        type: string
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      last_login:
+                        type: string
+                        format: date-time
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/user/{id}/activate:
+    get:
+      summary: Activate user
+      description: Activate a deactivated user account
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the user
+      tags:
+        - admin
+      responses:
+        '200':
+          description: User activated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      email:
+                        type: string
+                        format: email
+                      role:
+                        type: string
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      last_login:
+                        type: string
+                        format: date-time
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/user/{id}/deactivate:
+    get:
+      summary: Deactivate user
+      description: Deactivate a user account
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the user
+      tags:
+        - admin
+      responses:
+        '200':
+          description: User deactivated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      email:
+                        type: string
+                        format: email
+                      role:
+                        type: string
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      last_login:
+                        type: string
+                        format: date-time
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/security/special:
+  patch:
+    summary: Update security settings
+    description: Update system-wide security settings including 2FA, TOTP, and SMTP
+    tags:
+      - admin
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              force_2fa:
+                type: boolean
+                description: Whether 2FA is mandatory for all users
+                example: true
+              enable_totp:
+                type: boolean
+                description: Whether TOTP (Time-based One-Time Password) is enabled
+                example: true
+              enable_smtp:
+                type: boolean
+                description: Whether SMTP email functionality is enabled
+                example: true
+
+  responses:
+    '200':
+      description: Security settings updated successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: true
+              track_data:
+                type: object
+                properties:
+                  request_id:
+                    type: string
+                    format: uuid
+                  issuer_id:
+                    type: string
+                    format: uuid
+              payload:
+                type: object
+                properties:
+                  force_2fa:
+                    type: boolean
+                  enable_totp:
+                    type: boolean
+                  enable_smtp:
+                    type: boolean
+    '401':
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    '403':
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+  /api/v1/admin/user/{id}/update:
+    patch:
+      summary: Update user
+      description: Update user information including name, surname, password, and role
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+          description: Unique identifier of the user
+      tags:
+        - admin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Updated first name
+                  example: "анна"
+                surname:
+                  type: string
+                  description: Updated last name
+                  example: "петрова"
+                password:
+                  type: string
+                  description: New password for the user
+                  example: "N3wPa$$w0rd!"
+                role:
+                  type: string
+                  description: Updated user role
+                  example: "user"
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                        format: uuid
+                      issuer_id:
+                        type: string
+                        format: uuid
+                  payload:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        format: uuid
+                      email:
+                        type: string
+                        format: email
+                      role:
+                        type: string
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      last_login:
+                        type: string
+                        format: date-time
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /api/v1/system:
+    get:
+      summary: api/v1/system
+      tags:
+        - system
+      responses:
+        '200':
+          description: 200 OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  track_data:
+                    type: object
+                    properties:
+                      request_id:
+                        type: string
+                      issuer_id:
+                        type: string
+                  payload:
+                    type: object
+                    properties:
+                      frontend_url:
+                        type: string
+                      default_language:
+                        type: string
+                      smtp_enabled:
+                        type: boolean
+                      force_twofactor:
+                        type: boolean
+                      allow_self_registration:
+                        type: boolean
